@@ -15,7 +15,9 @@
 # import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
-
+import recommonmark
+from recommonmark.states import DummyStateMachine
+from recommonmark.transform import AutoStructify
 
 # -- Project information -----------------------------------------------------
 
@@ -33,13 +35,12 @@ release = ''
 
 # If your documentation needs a minimal Sphinx version, state it here.
 #
-# needs_sphinx = '1.0'
+needs_sphinx = '1.4'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = [
-]
+extensions = ['recommonmark']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -49,6 +50,11 @@ templates_path = ['_templates']
 #
 # source_suffix = ['.rst', '.md']
 source_suffix = '.md'
+
+# Add recommonmark parser for .md sources:
+source_parsers = {
+   '.md': 'recommonmark.parser.CommonMarkParser',
+}
 
 # The master toctree document.
 master_doc = 'index'
@@ -172,12 +178,22 @@ epub_title = project
 # A list of files that should not be packed into the epub file.
 epub_exclude_files = ['search.html']
 
-# -- Markdown Plugin Setup ---------------------------------------------------
+# -- Setup for recommonmark --------------------------------------------------
 
-from recommonmark.parser import CommonMarkParser
+github_doc_root = 'https://github.com/lcary/django-eventbus/tree/master/doc/'
 
-source_parsers = {
-    '.md': CommonMarkParser,
-}
+# Monkey patch to fix recommonmark 0.4 doc reference issues.
+# https://github.com/rtfd/recommonmark/issues/93
+orig_run_role = DummyStateMachine.run_role
+def run_role(self, name, options=None, content=None):
+    if name == 'doc':
+        name = 'any'
+    return orig_run_role(self, name, options, content)
+DummyStateMachine.run_role = run_role
 
-source_suffix = ['.rst', '.md']
+def setup(app):
+    app.add_config_value('recommonmark_config', {
+            'url_resolver': lambda url: github_doc_root + url,
+            'auto_toc_tree_section': 'Contents',
+            }, True)
+    app.add_transform(AutoStructify)

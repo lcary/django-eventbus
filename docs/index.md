@@ -1,20 +1,20 @@
-.. django-eventbus documentation master file, created by
-   sphinx-quickstart on Sun Dec 16 11:10:10 2018.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Django Eventbus Documentation
+=============================
 
-Welcome to django-eventbus's documentation!
-===========================================
-
+```eval_rst
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
-
+   Installation <usage/installation>
+   Quickstart <usage/quickstart>
+   API Reference <usage/api_ref>
+```
 
 Indices and tables
 ==================
 
+```eval_rst
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+```
