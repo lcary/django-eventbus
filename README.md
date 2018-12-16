@@ -70,6 +70,8 @@ subscribing (e.g. with Django signals) events.
 At the highest-level, a `ModelEvent` features a `model` and a `message`,
 both of which are saved to the database after producing and consuming
 events, with an automatically generated identifier for the event.
+Additionally, a `type` field exists on the model describing the type
+of event ('create', 'delete', or 'update').
 
 Admin Dashboards
 ----------------
