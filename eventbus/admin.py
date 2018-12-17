@@ -1,15 +1,33 @@
 from django.contrib import admin
 
-from .models import EventMessage, ModelEventMessage
+from .models import (
+    EventTopic,
+    ConsumerEvent,
+    ProducerEvent,
+    ConsumerModelEvent,
+    ProducerModelEvent)
 
 
-class EventMessageAdmin(admin.ModelAdmin):
+@admin.register(EventTopic)
+class EventTopicAdmin(admin.ModelAdmin):
     pass
 
 
-class ModelEventMessageAdmin(admin.ModelAdmin):
+@admin.register(ConsumerEvent)
+class ConsumerEventAdmin(admin.ModelAdmin):
     pass
 
 
-admin.register(EventMessage, EventMessageAdmin)
-admin.register(ModelEventMessage, ModelEventMessageAdmin)
+@admin.register(ProducerEvent)
+class ProducerEventAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(ConsumerModelEvent)
+class ConsumerModelEventAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(ProducerModelEvent)
+class ProducerModelEventAdmin(admin.ModelAdmin):
+    pass
